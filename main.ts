@@ -11,9 +11,12 @@ const cause = "the bug was a missing comma.";
 const kicker = "I have seen things.";
 const line = `${setup} ${cause} ${kicker}`;
 
-// Gate: the entry must be 1-139 UTF-8 characters, not only whitespace.
+// Gate: the entry must be 1-139 UTF-8 characters, one line, not only whitespace.
 if (line.length < 1 || line.length > 139 || !line.trim()) {
   throw new Error(`entry must be 1-139 chars, got ${line.length}`);
+}
+if (line.includes("\n")) {
+  throw new Error("entry must be a single line");
 }
 
 mkdirSync(outDir, { recursive: true });
